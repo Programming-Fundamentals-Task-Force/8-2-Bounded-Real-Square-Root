@@ -10,9 +10,9 @@ You will implement a bounded generic method that computes the square root of a g
 
 This assignment introduces:
 
-- Bounded generics (`T extends Number`) – Ensuring type safety while working with numeric types.
-- Custom exceptions (`NegativeValueException`) – Enforcing error handling for invalid inputs.
-- Try-catch-finally – Ensuring proper exception handling and cleanup.
+- Bounded generics (`T extends Number`) – ensuring type safety while working with numeric types.
+- Custom exceptions (`NegativeValueException`) – enforcing error handling for invalid inputs.
+- Try-catch-finally – ensuring proper exception handling and cleanup.
 
 Your goal is to design a generic method `squareRoot()` inside the `MathUtils` class that:
 
@@ -29,16 +29,16 @@ The Maven project has already been created for you. The package name is com.lab,
 
 Class: `NegativeValueException` (custom exception)
 
-- A checked exception (extends Exception).
+- An unchecked exception (extends `RuntimeException`).
 - Should be thrown when attempting to compute the square root of a negative number.
 - Constructor should accept an error message (a `String`).
 
 Class: `MathUtils` (utility class)
 
 - Implements a bounded generic method:
-  - `public static <T extends Number> double squareRoot(T value) throws NegativeValueException`
+  - `public static <T extends Number> double squareRoot(T value)`
   - Accepts only `Number` types (e.g., `Integer`, `Double`).
-  - Throws `NegativeValueException` if value is negative.
+  - Throws `NegativeValueException` with the message `"Cannot compute square root of a negative number."` if value is negative.
   - Returns the square root of the given number using `Math.sqrt()`.
 
 ## Examples and Usage
@@ -54,6 +54,4 @@ Computation completed.
 ## Additional Notes
 
 - Ensure `squareRoot()` is truly generic and works with `Integer`, `Double`, `Float`, etc.
-- Consider edge cases, such as:
-  - Passing `0` as input (valid case).
-  - Passing a very large number.
+- Consider edge cases, such as passing `0` as input (valid case).

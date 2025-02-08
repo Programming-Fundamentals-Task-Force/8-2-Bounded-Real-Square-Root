@@ -39,33 +39,55 @@ jobs:
         command: mvn exec:java -Dexec.mainClass="com.lab.App" --quiet -f ${{ env.PROJECT_DIR }}/pom.xml
         input: ''
         expected-output: |-
-          Hello, world!
+          Result: 5.0
+          Error: Cannot compute square root of a negative number.
+          Computation completed.
         comparison-method: exact
         timeout: 10
         max-score: 20
-    - name: Unit test 1
+    - name: square_root_of_a_positive_integer_is_correct
       id: unit-test-1
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: Unit test 1
+        test-name: square_root_of_a_positive_integer_is_correct
         setup-command: ''
-        command: "./gradle-tests/gradlew test --tests org.test.ClassTest.testOutput -p gradle-tests"
+        command: "./gradle-tests/gradlew test --tests org.test.MathUtilsTest.square_root_of_a_positive_integer_is_correct -p gradle-tests"
         timeout: 10
-        max-score: 40
-    - name: Unit test 2
+        max-score: 20
+    - name: square_root_of_zero_is_correct
       id: unit-test-2
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: Unit test 2
+        test-name: square_root_of_zero_is_correct
         setup-command: ''
-        command: "./gradle-tests/gradlew test --tests org.test.ClassTest.testEquality -p gradle-tests"
+        command: "./gradle-tests/gradlew test --tests org.test.MathUtilsTest.square_root_of_zero_is_correct -p gradle-tests"
         timeout: 10
-        max-score: 40
+        max-score: 20
+    - name: square_root_of_a_positive_decimal_is_correct
+      id: unit-test-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: square_root_of_a_positive_decimal_is_correct
+        setup-command: ''
+        command: "./gradle-tests/gradlew test --tests org.test.MathUtilsTest.square_root_of_a_positive_decimal_is_correct -p gradle-tests"
+        timeout: 10
+        max-score: 20
+    - name: square_root_of_a_negative_number_is_invalid
+      id: unit-test-4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: square_root_of_a_negative_number_is_invalid
+        setup-command: ''
+        command: "./gradle-tests/gradlew test --tests org.test.MathUtilsTest.square_root_of_a_negative_number_is_invalid -p gradle-tests"
+        timeout: 10
+        max-score: 20
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         CONSOLE-OUTPUT_RESULTS: "${{ steps.console-output.outputs.result }}"
         UNIT-TEST-1_RESULTS: "${{ steps.unit-test-1.outputs.result }}"
         UNIT-TEST-2_RESULTS: "${{ steps.unit-test-2.outputs.result }}"
+        UNIT-TEST-3_RESULTS: "${{ steps.unit-test-3.outputs.result }}"
+        UNIT-TEST-4_RESULTS: "${{ steps.unit-test-4.outputs.result }}"
       with:
-        runners: console-output,unit-test-1,unit-test-2
+        runners: console-output,unit-test-1,unit-test-2,unit-test-3,unit-test-4
